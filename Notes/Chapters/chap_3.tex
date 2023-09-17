@@ -1,0 +1,368 @@
+\section{Hedging Strategies Using Futures}
+
+In this chapter we will consider \emph{hedge-and-forget} strategies. We assume that no attempt is made to adjust a hedge once it has been put in place.
+
+\subsection{Basic Principles}
+\bigskip
+
+\begin{definition}[Short hedge]
+    A \emph{short hedge} is a hedge that involves a short position in a futures contract.
+\end{definition}
+
+A short hedge is appropriate when the hedger already owns or will own an asset
+and expects to sell it at some time in the future.
+
+\begin{definition}[Long hedge]
+    A \emph{long hedge} is a hedge that involves a long position in a futures contract.
+\end{definition}
+
+A long hedge is appropriate when a company knows it will have to purchase a
+certain asset in the future and wants to lock in a price now. For a company that uses the asset on a regular basis, it may be more convenient to buy it on the spot market. However, this strategy has the disadvantage of incurring interest costs or storage costs when compared with a long hedge. In practice the futures position is typically closed out before the delivery period.
+
+\subsection{Arguments for and Against Hedging}
+
+For most non-financial companies it makes sense to hedge, so that they can focus on their main activities. In practice, many risks are left unhedged. We now explore some reasons for this.
+
+\subsubsection*{Hedging and Shareholders}
+
+One argument is that shareholders can hedge themselves and don't require the company to do it for them. However, shareholders usually have less information than the company's management about the risks it faces. Commissions will also be greater when hedging is done by many individual shareholders. Shareholders with a diverse portfolio can be immune to more types of risk.
+
+\subsubsection*{Hedging and Competitors}
+
+Competitive pressures within an industry may incentivise a company not to hedge in order to maintain competitive prices. Consider two manufacturers of gold jewellery, company A and company B. Suppose that A doesn't hedge against the price movements of gold but that B does. We can summarise the effects in the \hyperref[tab:2]{table} below.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \emph{Change in gold price} & \emph{Effect on price of gold jewellery} & \emph{Effect on profits of A} & \emph{Effect on profits of B}\\\hline
+        Increase & Increase & None & Increase \\
+        Decrease & Decrease & None & Decrease \\\hline
+    \end{tabular}
+    \caption{}
+    \label{tab:2}
+\end{table}
+
+\subsubsection*{Hedging Can Lead to a Worse Outcome}
+
+Hedging can lead to an increase or a decrease in a company's profits relative to its position without hedging. A treasurer may choose not to hedge to avoid being in a situation where hedging has caused a loss in profits. To prevent this, it is important for senior executives to understand the nature of hedging.
+
+\subsection{Basis Risk}
+
+
+There are a couple of issues with hedging which give rise to \emph{basis risk}:
+\begin{enumerate}
+    \item The asset whose price is to be hedged may not be exactly the same as the asset underlying the futures contract.
+    \item There may be uncertainty as to the exact date when the asset will be bought or sold.
+    \item The hedge may require the futures contract to be closed out before its delivery month.
+\end{enumerate}
+
+\begin{definition}[Basis]
+    \[\textrm{Basis}\; =\; \textrm{Spot price}\; -\; \textrm{Futures price}\]
+\end{definition}
+\begin{note}
+    The \emph{basis} converges to zero at expiration, if the hedged asset and the asset underlying the futures contract are the same.
+\end{note}
+
+\begin{definition}
+    An increase (decrease) in the basis is referred to as a \emph{strengthening (weakening)} of the basis.
+\end{definition}
+
+\begin{notation}
+    At an initial time, \(t_{1}\).
+    \begin{enumerate}
+        \item[] \(S_{1}\): Spot price
+        \item[] \(F_{1}\): Futures price
+        \item[] \(b_{1}\): Basis
+    \end{enumerate}
+\end{notation}
+
+Let a hedge be put in place at a time \(t_1\) and closed out at \(t_2\). The effective price that is obtained for the asset with hedging is therefore:
+
+\begin{equation}
+    S_{2}+F_{1}-F_{2}=F_{1}+b_{2}
+    \label{eq:1}
+\end{equation}
+
+where the \emph{basis risk}, \(b_{2}\), is given by
+
+\begin{equation*}
+    b_{2}=S_{2}-F_{2}
+\end{equation*}
+
+Suppose a company is using a short hedge and the basis strengthens (weakens), then the company's position improves (worsens). The opposite is true for a company using a long hedge.
+
+Define \(S^*_{2}\) as the price of the futures contract's underlying asset at \(t_{2}\). Then we can rewrite \eqref{eq:1} as
+
+\begin{equation*}
+    (S_{2} - S^*_{2}) + F_{1} + (S^*_{2  } - F_{2})
+\end{equation*}
+
+\subsubsection*{Choice of Contract}
+
+One key factor affecting basis risk is the choice of the futures contract to be used for hedging. This choice has two components:
+
+\begin{enumerate}
+    \item The choice of the asset underlying the futures contract.
+    \item The choice of the delivery month.
+\end{enumerate}
+
+The best choice is the futures contract whose price is the most closely correlated with the price of the asset being hedged. If it is possible to use a futures contract with the same underlying asset as the one being hedged, then this is an obvious choice.
+
+A futures contract with delivery month that occurs after the hedge expires is preferable. It means erratic price movements that occur during the delivery month can be avoided. This also prevents the risk of having to take delivery (can be expensive and inconvenient).
+
+In general, basis risk increases as the time difference between the hedge expiration and the delivery month increases. A good rule of thumb is therefore to choose a delivery month that is as close as possible to, but later than, the expiration of the
+hedge.
+
+\subsection{Cross hedging}
+\bigskip
+
+\begin{definition}[Cross hedging]
+    \emph{Cross hedging} occurs when the asset underlying the futures contract differs from the asset whose price is being hedged.
+\end{definition}
+
+\begin{eg}
+    Consider an airline that is concerned about the future price
+    of jet fuel. Because jet fuel futures are not actively traded, it might choose to use heating oil futures contracts to hedge its exposure.
+\end{eg}
+
+\begin{definition}[Exposure]
+    The maximum loss from default by a counterparty.
+\end{definition}
+
+\begin{definition}[Hedge ratio]
+    The \emph{hedge ratio} is the ratio of the size of the position taken in futures contracts to the size of the exposure.
+\end{definition}
+
+Hence, when the assets are the same (not a cross hedge) it is natural to use a hedge ratio of \(1.0\).
+
+\subsubsection*{Calculating the Minimum Variance Hedge Ratio}
+
+
+
+\begin{definition}
+    Assume no daily settlement of futures contracts.
+    \begin{enumerate}
+        \item[] \(\Delta S\): Change in spot price, \(S\), during a period of time equal to the life of the hedge.
+        \item[] \(\Delta F\): Change in futures price, \(F\), during a period of time equal to the life of the hedge.
+    \end{enumerate}
+\end{definition}
+
+Assume an approximately linear relationship between \(\Delta S\) and \(\Delta F\):
+
+\begin{equation*}
+    \Delta S = a + b \Delta F  + \epsilon
+\end{equation*}
+
+where \(a\) and \(b\) are constants and \(\epsilon\) is an error term. Let the hedge ratio be \(h\). Then the change in the value of the position per unit of exposure to \(S\) is
+
+\begin{equation*}
+    \Delta S - h \Delta F = a + (b-h) \Delta F + \epsilon
+\end{equation*}
+
+The standard deviation of this is minimised by setting \(h=b\) (so that the second term on the right-hand side disappears). 
+
+Denote the minimum variance hedge ratio by \(h^*\). So \(h^{*} = b\) and we deduce
+
+\begin{equation}\label{eq:2}
+    h^{*} = \rho \frac{\sigma_{S}}{\sigma_{F}}
+\end{equation}
+
+where \(\sigma_{S}\) (\(\sigma_{F}\)) is the standard deviation of \(\Delta S\) (\(\Delta F\)) and \(\rho\) is the correlation coefficient between \(\sigma_{S}\) and \(\sigma_{F}\). These parameters are often estimated using historical data.
+
+\subsubsection*{Optimal Number of Contracts}
+\bigskip
+
+\begin{definition}
+    \hphantom{Define:}
+    \begin{enumerate}
+        \item[\(Q_{A}\):] Size of position being hedged.
+        \item[\(Q_{F}\):] Size of one futures contract.
+        \item[ \(N^{*}\):] Optimal number of futures contracts for hedging.
+    \end{enumerate}
+\end{definition}
+
+The futures contracts should be \(h^{*}Q_{A}\) units of the asset. Hence, we deduce:
+
+\begin{equation}\label{eq:3}
+    N^{*} = \frac{h^{*}Q_{A}}{Q_{F}}
+\end{equation}
+
+\begin{eg}
+    \begin{minipage}[t][][t]{0.55\textwidth}
+        An airline expects to purchase 2 million gallons of jet fuel in 1 month and decides to use heating oil futures for hedging. We are given \(\Delta S\), the change in jet fuel price per gallon and, \(\Delta F\), the change in the futures price for the contract on heating oil.
+        \medskip
+
+        We can then calculate \(\sigma_{S}=0.0263\), \(\sigma_{F}=0.0313\) and \(\rho=0.928\).
+        \medskip
+
+        Using \eqref{eq:2} we find
+        \begin{equation*}
+            h^{*}=\rho\frac{\sigma_{F}}{\sigma_{S}}\approx 0.78
+        \end{equation*}
+
+        Each heating oil contract is on \(\num{42000}\) gallons of heating oil. Hence, by \eqref{eq:3}
+        \begin{equation*}
+            N^{*} = \frac{0.78\times \num{2000000}}{\num{ 42000}}\approx 37
+        \end{equation*}
+    \end{minipage}
+    \begin{minipage}[t][][c]{0.34\textwidth}
+        \raggedleft
+        \vspace{-0.2cm}
+        \begin{tabular}{|c|r|r|}
+                \hline
+                Month & \(\Delta S\) & \(\Delta F\)\\
+                \hline
+                1 & \(0.021\) & \(0.029\)\\
+                2 & \(0.035\) & \(0.020\)\\
+                3 & \(-0.046\) & \(-0.044\)\\
+                4 & \(0.001\) & \(0.008\)\\
+                5 & \(0.044\) & \(0.026\)\\
+                6 & \(-0.029\) & \(-0.019\)\\
+                7 & \(-0.026\) & \(-0.010\)\\
+                8 & \(-0.029\) & \(-0.007\)\\
+                9 & \(0.048\) & \(0.043\)\\
+                10 & \(-0.006\) & \(0.011\)\\
+                11 & \(-0.036\) & \(0.036\)\\
+                12 & \(-0.011\) & \(-0.018\)\\
+                13 & \(0.019\) & \(0.009\)\\
+                14 & \(-0.027\) & \(-0.032\)\\
+                15 & \(0.029\) & \(0.023\)\\
+                \hline
+        \end{tabular}
+    \end{minipage}
+\end{eg}
+
+\subsubsection*{Impact of Daily Settlement}
+
+Thee analysis presented above is appropriate for forward contracts, but for future contracts we need to consider the impact of daily settlement.
+
+\begin{definition}
+    \hphantom{Define:}
+    \begin{enumerate}
+        \item[\(\hat{\sigma}_{S}\):] Standard deviation of daily percentage changes in the spot price.
+        \item[\(\hat{\sigma}_{F}\):] Standard deviation of daily percentage changes in the futures price.
+        \item[\(\hat{\rho}\):] Correlation between daily percentage changes in the spot and futures.
+    \end{enumerate}
+\end{definition}
+
+Now \(\sigma_{S}=\hat{\sigma}_{S}S\) and \(\sigma_{F}=\hat{\sigma}_{F}F\) so by \eqref{eq:2}
+
+\begin{equation*}
+    h^{*}=\hat{\rho}\frac{\hat{\sigma}_{S}S}{\hat{\sigma}_{F}F}
+\end{equation*}
+
+and by \eqref{eq:3}
+
+\begin{equation*}
+    N^{*}=\hat{\rho}\frac{\hat{\sigma}_{S}SQ_{A}}{\hat{\sigma}_{F}FQ_{F}}
+\end{equation*}
+
+The hedge ratio in \eqref{eq:2} is based on regressing actual changes in spot prices against actual changes in futures prices. An alternative hedge ratio, \(\hat{h}\), can be derived in the same way by regressing daily percentage changes in spot against daily percentage changes in futures:
+
+\begin{equation*}
+    \hat{h}=\hat{\rho}\frac{\hat{\sigma}_S}{\hat{\sigma}_F}
+\end{equation*}
+
+Then
+
+\begin{equation}
+    N^{*}=\frac{\hat{h}V_{A}}{V_{F}}
+\end{equation}
+
+where \(V_{A}=SQ_{A}\) is the value of the position being hedged and \(V_{F}=FQ_{F}\) is the futures price times the size of one contract.
+
+\subsection{Stock Index Futures}
+\bigskip
+
+\begin{definition}[Stock index]
+    A \emph{stock index} tracks changes in the value of a hypothetical portfolio of stocks.
+\end{definition}
+
+The weight of a stock in the portfolio at a particular time equals the proportion of the hypothetical portfolio invested in the stock at that time.
+
+\subsubsection*{Hedging an Equity Portfolio}
+
+Stock index futures can be used to hedge a well-diversified equity portfolio.
+\begin{definition}
+    \hphantom{Define:}
+    \begin{enumerate}
+        \item[\(V_{A}\):] Current value of the portfolio.
+        \item[\(V_{F}\):] Current value of one futures contract (futures  price times contract size).
+    \end{enumerate}
+\end{definition}
+
+If the portfolio mirrors the index, the optimal hedge ratio, \(\hat{h}\), can be assumed to be 1.0 and by \eqref{eq:3} the optimal number of contracts to be shorted is
+
+\begin{equation}
+    N^{*}=\frac{V_{A}}{V_{F}}
+\end{equation}
+
+\begin{eg}
+    Suppose a portfolio worth \(\$\num{5050000}\) mirrors a well-diversified portfolio. The index futures price is \(\$1010\) and each futures contract is on \(250\) times the index. So \(V_{A}=\num{50500000}\) and \(V_{F}=1010 \times 250=\num{252000}\). Therefore 20 contracts should be shorted to hedge the portfolio.
+\end{eg}
+
+The parameter, \(\beta\), from the capital asset pricing model is the slope of the best-fit line obtained when excess return on the \emph{portfolio} over the risk-free rate is regressed against the excess return on the \emph{index} over the risk-free rate. When \(\beta=1.0\), the return on the portfolio tends to mirror the return on the index; when \(\beta=2.0\), the return on the portfolio tends to be twice as great as the return on the index and so on. So in general we have
+
+\begin{equation}
+    N^{*}=\beta \frac{V_{A}}{V_{F}}
+\end{equation}
+
+assuming that the maturity of the futures contract is close to the maturity
+of the hedge. This implies that \(\hat{h}=\beta\).
+
+\subsubsection*{Reasons for Hedging an Equity Portfolio}
+
+\begin{itemize}
+    \item A hedge using index futures removes the risk arising from market moves and leaves the hedger exposed only to the performance of the portfolio relative to the market.
+    \item A hedger planning to hold a portfolio for a long period of time and may require short-term protection in an uncertain market situation.
+\end{itemize}
+
+\subsubsection*{Changing the Beta of a Portfolio}
+
+To change the beta of a portfolio from \(\beta\) to \(\beta^*\), where \(\beta>\beta^*\), a short position in
+
+\begin{equation*}
+    (\beta-\beta^*) \frac{V_{A}}{V_{F}}
+\end{equation*}
+
+contracts is required. When \(\beta<\beta^*\), a long position in
+
+\begin{equation*}
+    (\beta^*-\beta) \frac{V_{A}}{V_{F}}
+\end{equation*}
+
+contracts is required.
+
+\subsubsection*{Locking in the Benefits of Stock Picking}
+
+Suppose you own a single stock or a small portfolio of stocks and that you're confident that your portfolio will perform better than the market over the next few months. Then you should short \(\sfrac{\beta V_{A}}{V_{F}}\) index contracts, where \(V_{A}\) is the value of your portfolio and \(V_{F}\) is the value of one index futures contract.
+
+\subsection{Stack and Roll}
+
+Suppose the expiration date of the hedge is later than the delivery dates of all the futures contracts that can be used. The hedger must then roll the hedge forward by closing out one futures contract and taking the same position in a futures contract with a later delivery date. This procedure is known as \emph{stack and roll}.
+
+\subsection{Capital Asset Pricing Model}
+
+The capital asset pricing model (CAPM) relates the expected return from an asset to the risk of the return.
+
+\begin{definition}
+    The risk in the return from an asset is divided into two parts. 
+    \begin{description}
+        \item[Systematic risk] is risk related to the return from the market as a whole and cannot be diversified away.
+        \item[Nonsystematic risk] is risk that is unique to the asset and can be diversified away.
+    \end{description}
+    \begin{note}
+        Risk can be diversified away by choosing a large portfolio of different assets.
+    \end{note}
+\end{definition}
+
+CAPM suggests that the return should only depend on systematic risk. The formula is
+
+\begin{equation}
+    \text{Expected return on asset}=R_{F}+\beta(R_{M}-R_{F})
+\end{equation}
+
+where \(R_{F}\) is the return on portfolio of all available investments, \(R_{F}\) is the return on a risk-free investment and \(\beta\) is a parameter measuring systematic risk.
+
+More details on this section in the textbook.

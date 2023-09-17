@@ -1,0 +1,108 @@
+% basics
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[hyphens]{url}
+\usepackage[style=alphabetic,maxcitenames=1]{biblatex}
+\usepackage[colorlinks=true,linkcolor=cyan,urlcolor=magenta,citecolor=violet, pdfpagemode=FullScreen, pdfusetitle]{hyperref}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\usepackage[usenames,dvipsnames]{xcolor}
+
+\input{~/Github/Notes-Template/Math.tex}
+
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\usepackage[nameinlink]{cleveref} % make 
+\usepackage{geometry}
+\usepackage{cancel}
+\usepackage{systeme}
+
+\usepackage[inline, shortlabels]{enumitem}
+\renewcommand*\labelenumiii{(\theenumiii)}
+\setlist[itemize]{leftmargin=*}
+\setlist[enumerate]{leftmargin=*}
+
+\usepackage{multicol}
+\setlength\multicolsep{0pt}
+
+\usepackage{caption}
+\captionsetup{belowskip=0pt}
+\geometry{a4paper,margin=1.5cm}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{\baselineskip/2}
+
+% correct
+\definecolor{correct}{HTML}{009900}
+\newcommand\correct[2]{\ensuremath{\:}{\color{red}{#1}}\ensuremath{\to }{\color{correct}{#2}}\ensuremath{\:}}
+\newcommand\green[1]{{\color{correct}{#1}}}
+
+% hide parts
+\newcommand\hide[1]{}
+
+% si unitx
+\usepackage{siunitx}
+\sisetup{locale = FR}
+
+% tikz
+\usepackage{tikz}
+\usetikzlibrary{intersections, angles, quotes, positioning}
+\usetikzlibrary{arrows.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.3}
+
+\tikzset{
+	force/.style={thick, {Circle[length=2pt]}-stealth, shorten <=-1pt}
+}
+
+% Algorithm Env
+\usepackage[linesnumbered,lined,vlined,plain,commentsnumbered,resetcount,algosection]{algorithm2e}
+\SetKwComment{Comment}{// }{}
+\SetArgSty{textsl}
+\def\algocflineautorefname{Algorithm}
+
+% counters
+\counterwithin{algocfline}{section}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\counterwithin{equation}{section}
+
+% Clear out the item autoref name
+\makeatletter
+\def\itemautorefname{\@gobble}
+\makeatother
+
+% Theorems
+\input{~/Github/Notes-Template/theorems.tex}
+
+
+\usepackage{pgffor}%
+\newcommand{\chapters}[2]{%
+	\foreach \c in {#1,...,#2}{%
+			\IfFileExists{Chapters/chap_\c.tex} {%
+				\input{Chapters/chap_\c.tex}%
+			}{}%
+		}%
+}
+
+% fancy headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% LE: left even
+% RO: right odd
+% CE, CO: center even, center odd
+\fancyhead[C]{\textit{\leftmark}}
+\fancyhead[L, R]{}
+% \fancyhead[R]{}
+\fancyfoot[C]{\thepage}
+
+
+% Fix some stuff
+% %http://tex.stackexchange.com/questions/76273/multiple-pdfs-with-page-group-included-in-a-single-page-warning
+\pdfsuppresswarningpagegroup=1
+
+% Appendix environment
+\usepackage{appendix}
+
+\setcounter{tocdepth}{2}

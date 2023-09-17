@@ -1,0 +1,268 @@
+\usepackage{thmtools}
+\usepackage[many]{tcolorbox}
+
+% Wrap \newtcbtheorem so that arguments are optional: [title=..., label=...]
+% https://tex.stackexchange.com/a/581964
+
+% Also provide commands to copy environments
+
+\ExplSyntaxOn
+
+\ProvideDocumentCommand \NewEnvironmentCopy {mm} {
+    \expandafter \NewCommandCopy \csname#1\expandafter\endcsname \csname#2\endcsname
+    \expandafter \NewCommandCopy \csname end#1\expandafter\endcsname \csname end#2\endcsname
+}
+
+\ProvideDocumentCommand \RenewEnvironmentCopy {mm} {
+    \expandafter \RenewCommandCopy \csname#1\expandafter\endcsname \csname#2\endcsname
+    \expandafter \RenewCommandCopy \csname end#1\expandafter\endcsname \csname end#2\endcsname
+}
+
+\NewDocumentCommand{\mynewtcbtheorem}{O{}mmmm}
+{
+    \newtcbtheorem[#1]{#2inner}{#3}{#4}{#5}
+    \NewDocumentEnvironment{#2}{O{}}
+    {
+        \keys_set:nn { thm/tcb } { ##1 }
+        \thm_tcb_begin:nVV {#2inner} \l__thm_tcb_title_tl \l__thm_tcb_label_tl
+    }
+    {
+        \end{#2inner}
+    }
+    \NewDocumentEnvironment{#2*}{O{}}
+    {
+        \keys_set:nn { thm/tcb } { ##1 }
+        \thm_tcb_begin:nVV {#2inner*} \l__thm_tcb_title_tl \l__thm_tcb_label_tl
+    }
+    {
+        \end{#2inner*}
+    }
+    \cs_if_exist:cF { c@#5} { \newcounter{#5} }
+}
+
+\NewDocumentCommand{\myrenewtcbtheorem}{O{}mmmm}
+{
+    \newtcbtheorem[#1]{#2inner}{#3}{#4}{#5}
+    \RenewDocumentEnvironment{#2}{O{}}
+    {
+        \keys_set:nn { thm/tcb } { ##1 }
+        \thm_tcb_begin:nVV {#2inner} \l__thm_tcb_title_tl \l__thm_tcb_label_tl
+    }
+    {
+        \end{#2inner}
+    }
+    \cs_if_exist:cF { c@#5} { \newcounter{#5} }
+    \DeclareDocumentEnvironment{#2*}{O{}}
+    {
+        \keys_set:nn { thm/tcb } { ##1 }
+        \thm_tcb_begin:nVV {#2inner*} \l__thm_tcb_title_tl \l__thm_tcb_label_tl
+    }
+    {
+        \end{#2inner*}
+    }
+    \cs_if_exist:cF { c@#5} { \newcounter{#5} }
+}
+
+\cs_new_protected:Nn \thm_tcb_begin:nnn
+{
+    \begin{#1}{#2}{#3}
+}
+\cs_generate_variant:Nn \thm_tcb_begin:nnn { nVV }
+\keys_define:nn { thm/tcb }
+{
+    title .tl_set:N = \l__thm_tcb_title_tl,
+    label .tl_set:N = \l__thm_tcb_label_tl,
+}
+
+\ExplSyntaxOff
+
+% ============================================================================
+% Colours
+% ============================================================================
+
+% ForestGreen
+% NavyBlue
+% Goldenrod
+% Gray
+\definecolor{DarkPurple}{HTML}{783866}
+\definecolor{PastelPink}{HTML}{FF5465}
+\definecolor{DarkBlue}{HTML}{08004c}
+\colorlet{DarkBrown}{black!70!brown!80}
+
+% ============================================================================
+% Boxes
+% ============================================================================
+
+\tcbset{
+    sticky/.style={
+            bicolor,
+            underlay={
+                    \begin{tcbclipframe}
+                        \draw [line width=1mm, color=#1] (interior.south west)--(interior.north west);
+                    \end{tcbclipframe}
+                },
+            pad at break*=2mm, breakable, boxrule=0mm,
+            left=4mm, right=4mm, top=1mm, bottom=1mm,
+            frame hidden, colback=#1!8, colbacklower=#1!2,
+            arc=.5mm, beforeafter skip balanced=3mm,
+            detach title, fonttitle=\sffamily\bfseries,
+            description delimiters parenthesis,
+            description font=\mdseries,
+            separator sign none, terminator sign none,
+            coltitle=#1!70!black,
+            before upper={\tcbtitle\quad}
+        },
+    titled/.style={enhanced, pad at break*=2mm, breakable,
+            left=4mm, right=4mm, top=1mm, bottom=1mm,
+            colback=#1!8, boxrule=0.5mm,
+            colframe=#1, arc=.5mm,
+            fonttitle=\sffamily\bfseries, coltitle=#1!8,
+            beforeafter skip balanced=3mm
+        }
+}
+
+% ============================================================================
+% Theorems
+% ============================================================================
+
+\mynewtcbtheorem[number within=section]{theorem}
+{Theorem}{sticky=DarkPurple, label type=theorem}{thm}
+\mynewtcbtheorem[number within=section]{proposition}
+{Proposition}{sticky=DarkPurple, label type=proposition}{prop}
+\mynewtcbtheorem[number within=section]{conjecture}
+{Conjecture}{sticky=DarkPurple, label type=conjecture}{conj}
+\mynewtcbtheorem[number within=section]{corollary}
+{Corollary}{sticky=DarkPurple, label type=corollary}{coro}
+\mynewtcbtheorem[number within=section]{lemma}
+{Lemma}{sticky=DarkPurple, label type=lemma}{lem}
+
+% ============================================================================
+% Definition
+% ============================================================================
+
+\mynewtcbtheorem[number within=section]{definition}
+{Definition}{sticky=ForestGreen, label type=definition}{def}
+
+% ============================================================================
+% Example
+% ============================================================================
+
+\mynewtcbtheorem[number within=section]{example}
+{Example}{sticky=NavyBlue, label type=example}{eg}
+
+% ============================================================================
+% Exercise & question
+% ============================================================================
+
+\mynewtcbtheorem[number within=section]{exercise}
+{Exercise}{sticky=PastelPink, label type=exercise}{ex}
+
+% \newtcolorbox[
+%     auto counter,
+%     number freestyle={\noexpand\arabic{\tcbcounter})}]
+% {question}{
+%     detach title,
+%     title={Question \thetcbcounter},
+%     coltitle=black,
+%     fonttitle=\bfseries,
+%     before upper={\tcbtitle\quad},
+% }
+
+% ============================================================================
+% Note
+% ============================================================================
+
+\mynewtcbtheorem[no counter]{note}
+{Note}{sticky=Goldenrod, label type=note}{note}
+\mynewtcbtheorem[no counter]{remark}
+{Remark}{sticky=Goldenrod, label type=remark}{rem}
+
+% ============================================================================
+% Notation
+% ============================================================================
+
+\mynewtcbtheorem[no counter]{notation}
+{Notation}{sticky=Gray, label type=notation}{notation}
+
+% ============================================================================
+% Formula
+% ============================================================================
+
+\newtcolorbox{formula}[1]{
+    titled=DarkBlue,
+    title=#1,
+    label type=formula
+}
+
+% ============================================================================
+% Proof & answer
+% ============================================================================
+
+% If the proof/answer environment is inside a theorem environment then we don't wrap with a tcolorbox and instead split the current tcolorbox
+\newbool{intheorem}
+
+\NewDocumentCommand{\patchtheorem}{mms}{
+    \AtBeginEnvironment{#1}{\colorlet{proofcolor}{#2}\booltrue{intheorem}}
+    \AfterEndEnvironment{#1}{\colorlet{proofcolor}{#2}}
+    {
+        \IfBooleanT{#3}{
+            \AtBeginEnvironment{#1*}{\colorlet{proofcolor}{#2}\booltrue{intheorem}}
+            \AfterEndEnvironment{#1*}{\colorlet{proofcolor}{#2}}
+
+        }
+    }
+}
+
+% Default proofcolor
+\colorlet{proofcolor}{DarkPurple}
+\patchtheorem{theorem}{DarkPurple}*
+\patchtheorem{proposition}{DarkPurple}*
+\patchtheorem{conjecture}{DarkPurple}*
+\patchtheorem{corollary}{DarkPurple}*
+\patchtheorem{lemma}{DarkPurple}*
+\patchtheorem{definition}{ForestGreen}*
+\patchtheorem{example}{NavyBlue}*
+\patchtheorem{exercise}{PastelPink}*
+\patchtheorem{remark}{Goldenrod}
+
+\renewcommand{\qed}{\null\hfill\textcolor{proofcolor}{\(\blacksquare\)}}
+
+\newenvironment{wraptheorem}{
+    \ifbool{intheorem}{}{\begin{tcolorbox}[
+                sticky=proofcolor,
+                colback=proofcolor!2, before upper={}
+            ]}}
+            {\ifbool{intheorem}{}{\end{tcolorbox}}}
+
+\makeatletter
+\renewenvironment{proof}[1][Proof]{
+    \begin{wraptheorem}\par
+        \pushQED{\qed}%
+        \normalfont \topsep6\p@\@plus6\p@\relax
+        \trivlist
+        \item{\color{proofcolor!70!black}\sffamily\bfseries
+                    #1}\ignorespaces\hspace{1em}
+        }{%
+        \popQED\endtrivlist\@endpefalse\end{wraptheorem}
+}
+\makeatother
+
+\newenvironment{answer}[1][Answer]{
+    \renewcommand{\qed}{\null\hfill\textcolor{proofcolor}{\(\circledast\)}}
+    \proof[#1]}{\endproof}
+
+\BeforeBeginEnvironment{proof}{\ifbool{intheorem}{\tcblower}{}}
+\BeforeBeginEnvironment{answer}{\ifbool{intheorem}{\tcblower}{}}
+
+% ============================================================================
+% Algorithm
+% ============================================================================
+
+\NewEnvironmentCopy{oldalgorithm}{algorithm}
+
+\myrenewtcbtheorem[number within=section]{algorithm}{Algorithm}{
+    titled=DarkBrown,
+    description delimiters parenthesis,
+    separator sign none, terminator sign none,
+    description font=\mdseries,
+    label type=algorithm, before upper={\oldalgorithm[H]}, after upper={\endoldalgorithm}}{alg}
