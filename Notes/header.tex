@@ -8,7 +8,7 @@
 \usepackage{subcaption}
 \usepackage[usenames,dvipsnames]{xcolor}
 
-\input{~/Github/Templates/Math.tex}
+\input{~/Github/LaTeX-Templates/Math.tex}
 
 \usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
 \usepackage[nameinlink]{cleveref} % make 
@@ -72,7 +72,7 @@
 \makeatother
 
 % Theorems
-\input{theorems.tex}
+\input{~/Github/LaTeX-Templates/Notes/theorems.tex}
 
 
 \usepackage{pgffor}%
@@ -100,6 +100,9 @@
 % Fix some stuff
 % %http://tex.stackexchange.com/questions/76273/multiple-pdfs-with-page-group-included-in-a-single-page-warning
 \pdfsuppresswarningpagegroup=1
+
+\BeforeBeginEnvironment{abstract}{\vspace*{\fill}}
+\AfterEndEnvironment{abstract}{\vspace*{\fill}}
 
 % Appendix environment
 \usepackage{appendix}
