@@ -1,26 +1,24 @@
 \documentclass[12pt]{article}
 \input{header.tex}
 
-\newcommand*{\course}{MA244 Analysis 3}
-\newcommand*{\assignment}{1}
+\newcommand*{\studentid}{u999999}
+\newcommand*{\course}{PX3A3 Electrodynamics}
+\newcommand*{\subtitle}{Assignment 1}
 
 \begin{document}
 
 \maketitle
 
-\begin{enumerate}[leftmargin=*]
-
-%%%%%%%%%%%%%%%%%%%%
-\item %Question 1
-%%%%%%%%%%%%%%%%%%%%
-
-\begin{enumerate}
-	\item First let's consider the definite integral of \(f(x)\)
-	\begin{equation*}
-	\int_0^2\left(x^4 - 2x +1 \right)dx\\
-	\end{equation*}
-\end{enumerate}
-
-\end{enumerate}
+\begin{question}
+	Show how a Maxwell equation emerges from the relationship \(\partial_{\alpha} F^{\alpha \beta} = \mu_{0} j^{\beta}\) when \(\beta = 0\).
+		\begin{answer}
+			For \(\beta = 0\),
+			\begin{gather*}
+				 \partial_{0}F^{00} + \partial_{1}F^{10} + \partial_{2}F^{20} + \partial_{3}F^{30} = \mu_{0}j^{0}\\
+				 0 + \frac{\partial E_{x}}{\partial x} + \frac{\partial E_{y}}{\partial y} + \frac{\partial E_{z}}{\partial z} = c \mu_{0}(c \rho)\\
+				 \nabla\cdot \EMvec{E} = \frac{\rho}{\epsilon_{0}}
+			\end{gather*}
+		\end{answer}
+\end{question}
 
 \end{document}

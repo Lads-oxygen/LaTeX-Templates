@@ -1,28 +1,48 @@
+\usepackage[usenames,dvipsnames]{xcolor}
 \input{~/Github/LaTeX-Templates/Math.tex}
+\input{~/Github/LaTeX-Templates/Global.tex}
 
-\usepackage[margin=1.5cm, a4paper]{geometry}
+\usepackage[margin=1cm, footskip=0.7cm, a4paper]{geometry}
 \usepackage{amsmath, amssymb}
 \usepackage{mathtools}
+\usepackage[colorlinks=true,linkcolor=cyan,urlcolor=magenta,citecolor=violet, pdfpagemode=FullScreen, pdfusetitle]{hyperref}
 \usepackage{siunitx}
-\sisetup{locale = FR}
+\sisetup{locale = FR, output-decimal-marker = {.}, separate-uncertainty = true}
+
+% tikz
+\usepackage{tikz}
+\usetikzlibrary{intersections, angles, quotes, positioning}
+\usetikzlibrary{arrows.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{statistics}
 
 \usepackage{systeme}
 \usepackage{enumitem}
+\renewcommand*\labelenumiii{(\theenumiii)}
+\setlist[itemize]{leftmargin=*, itemsep=\parskip/2}
+\setlist[enumerate]{leftmargin=*, itemsep=\parskip/2}
 
+% Algorithm Env
+\usepackage[linesnumbered,lined,vlined,plain,commentsnumbered,resetcount,algosection]{algorithm2e}
+\SetKwComment{Comment}{// }{}
+\SetArgSty{textsl}
+% \def\algocflineautorefname{Algorithm}
+\NewCommandCopy{\legacyunderscore}{\_}
+\renewcommand{\_}{\ifincsname_\else\legacyunderscore\fi}
+
+\input{~/Github/LaTeX-Templates/Assignment/theorems.tex}
 
 \allowdisplaybreaks
 
-% Third level enum
-\renewcommand*\labelenumiii{(\theenumiii)}
-
 \setlength{\parindent}{0pt}
 
-\renewcommand\maketitle{    
+\renewcommand\maketitle{
     \noindent
     \rlap{Ladislas Walewski} \hfill \textbf{\large \course} \hfill \llap{}
 
     \noindent
-    \rlap{u999999} \hfill Assignment \assignment \hfill \llap{}
+    \rlap{\studentid} \hfill \subtitle \hfill \llap{}
 
     \noindent\rule{\linewidth}{0.1mm}
 

@@ -9,6 +9,7 @@
 \usepackage[usenames,dvipsnames]{xcolor}
 
 \input{~/Github/LaTeX-Templates/Math.tex}
+\input{~/Github/LaTeX-Templates/Global.tex}
 
 \usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
 \usepackage[nameinlink]{cleveref} % make 
@@ -18,8 +19,8 @@
 
 \usepackage[inline, shortlabels]{enumitem}
 \renewcommand*\labelenumiii{(\theenumiii)}
-\setlist[itemize]{leftmargin=*}
-\setlist[enumerate]{leftmargin=*}
+\setlist[itemize]{leftmargin=*, itemsep=\parskip/2, topsep=\parskip/2}
+\setlist[enumerate]{leftmargin=*, itemsep=\parskip/2, topsep=\parskip/2}
 
 \usepackage{multicol}
 \setlength\multicolsep{0pt}
@@ -30,6 +31,7 @@
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{\baselineskip/2}
+
 
 % correct
 \definecolor{correct}{HTML}{009900}
@@ -45,26 +47,24 @@
 
 % tikz
 \usepackage{tikz}
-\usetikzlibrary{intersections, angles, quotes, positioning}
-\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc, decorations.markings, intersections, angles, quotes, positioning, arrows, arrows.meta}
+\usetikzlibrary{external}
+\tikzexternalize[prefix=Figures/compiled/]
+\AtBeginDocument{\tcbset{shield externalize}}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.3}
-
-\tikzset{
-	force/.style={thick, {Circle[length=2pt]}-stealth, shorten <=-1pt}
-}
 
 % Algorithm Env
 \usepackage[linesnumbered,lined,vlined,plain,commentsnumbered,resetcount,algosection]{algorithm2e}
 \SetKwComment{Comment}{// }{}
 \SetArgSty{textsl}
-\def\algocflineautorefname{Algorithm}
+% \def\algocflineautorefname{Algorithm}
 
 % counters
 \counterwithin{algocfline}{section}
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
-\counterwithin{equation}{section}
+\counterwithin{equation}{subsection}
 
 % Clear out the item autoref name
 \makeatletter
@@ -108,3 +108,12 @@
 \usepackage{appendix}
 
 \setcounter{tocdepth}{2}
+
+
+\newcommand{\tableofcontentstretched}{
+	\setstretch{0.6}
+	\tableofcontents
+	\setstretch{1}
+}
+
+

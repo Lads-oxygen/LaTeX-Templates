@@ -1,18 +1,14 @@
 % quiver style
 \usepackage{tikz-cd}
-% `calc` is necessary to draw curved arrows.
-\usetikzlibrary{calc}
-% `pathmorphing` is necessary to draw squiggly arrows.
-\usetikzlibrary{decorations.pathmorphing}
 
-% A TikZ style for curved arrows of a fixed height, due to AndréC.
-\tikzset{curve/.style={settings={#1},to path={(\tikztostart)
-					.. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
-					and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
-					.. (\tikztotarget)\tikztonodes}},
-	settings/.code={\tikzset{quiver/.cd,#1}
-			\def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
-	quiver/.cd,pos/.initial=0.35,height/.initial=0}
+\tikzset{mid arrow/.style 2 args={postaction={decorate,decoration={
+              markings,
+              mark=at position {#1} with {\arrow[#2]{to}}
+            }}}}
+
+% Draw arc from circle centre
+\def\centerarc[#1](#2)(#3:#4:#5)% Syntax: [draw options] (center) (initial angle:final angle:radius)
+{ \draw[#1] ($(#2)+({#5*cos(#3)},{#5*sin(#3)})$) arc (#3:#4:#5); }
 
 % TikZ arrowhead/tail styles.
 \tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
@@ -25,29 +21,112 @@
 \usepackage{xfrac}
 \usepackage{physics}
 
-\newcommand{\euler}{\mathbf{e}}
-\newcommand{\im}{\mathbf{i}}
-\newcommand{\ihat}{\boldsymbol{\hat{\textbf{\i}}}}
-\newcommand{\jhat}{\boldsymbol{\hat{\textbf{\j}}}}
-\newcommand{\khat}{\boldsymbol{\hat{\textbf{\k}}}}
-\newcommand{\basis}[1]{\mathrm{\mathbf{#1}}}
-\newcommand{\mean}[1]{\langle #1 \rangle}
+% \newcommand{\varsf}{\usefont{T1}{lmssq}{md}{n}aas}
+\DeclareFontFamily{T1}{lmssq}{}
+\DeclareFontShape{T1}{lmssq}{md}{n}{ <-> s*[0.87] cs-lmssq8 }{}
+\DeclareMathAlphabet{\fundamental}{T1}{lmssq}{md}{n}
+
+\NewDocumentCommand\set{sm}{%
+  \IfBooleanTF#1%
+  {\{#2\}}% If a star is seen
+  {\qty{#2}}% If no star is seen
+}
+
+\NewDocumentCommand\inner{mm}{%
+  \left\langle#1,#2\right\rangle%
+}
+
+\newcommand*{\euler}{\fundamental{e}}
+\newcommand*{\im}{\fundamental{i}}
+\newcommand*{\ihat}{\bm{\hat{\textbf{\i}}}}
+\newcommand*{\jhat}{\bm{\hat{\textbf{\j}}}}
+\newcommand*{\khat}{\bm{\hat{\textbf{k}}}}
+\newcommand*{\basis}[1]{\mathbf{#1}}
+\newcommand*{\mean}[1]{\langle #1 \rangle}
+\newcommand*{\df}{\mathop{}\!\mathrm{d}}
+\newcommand*{\N}{\ensuremath{\mathbb{N}}}
+\newcommand*{\Z}{\ensuremath{\mathbb{Z}}} % Integers
+\newcommand*{\R}{\ensuremath{\mathbb{R}}} % Real numbers
+\newcommand*{\C}{\ensuremath{\mathbb{C}}} % Complex numbers
+\newcommand*{\Q}{\ensuremath{\mathbb{Q}}} % Rational numbers
+
 \DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\spn}{span}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\argmax}{argmax}
+
+\newcommand{\res}{\Res}
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
 
 \let\implies\Rightarrow
 \let\impliedby\Leftarrow
-\let\iff\Leftrightarrow
+\makeatletter
+\renewcommand*\iff{%
+  \relax\if@display
+    \expandafter\Longleftrightarrow
+  \else
+    \expandafter\Leftrightarrow
+  \fi
+}
+\makeatother
+\newcommand{\uniformto}{\rightrightarrows}
 
 \usepackage{bm}
-\usepackage{bbm}
+\usepackage{bboldx}
+% \usepackage[bb=mt]{mathalpha}
 
-% figure support
-\usepackage{import}
-\usepackage{xifthen}
-\pdfminorversion=7
-\usepackage{pdfpages}
-\usepackage{transparent}
-\newcommand{\incfig}[1]{%
-	\def\svgwidth{\columnwidth}
-	\import{./Figures/}{#1.pdf_tex}
+% Define \thinoverline for use in \conj
+\usepackage[usestackEOL]{stackengine}
+\usepackage{scalerel}
+\def\thinoverline#1{\ThisStyle{%
+    \setbox0=\hbox{$\SavedStyle#1$}%
+    \stackengine{1.2\LMpt}{$\SavedStyle#1$}{\rule{\wd0}{.2\LMpt}}{O}{c}{F}{F}{S}%
+  }}
+
+% Define \conj
+\ExplSyntaxOn
+\NewDocumentCommand{\conj}{m}{
+  \int_compare:nTF {\tl_count:n { #1 } > 1}
+  {
+    \thinoverline{#1}
+  }
+  {
+    \mkern 2.5mu\thinoverline{\mkern-2.5mu#1\mkern-0.5mu}\mkern 0.5mu
+  }
 }
+
+% Remove extra space below equations
+\newenvironment{NoBelowDisplaySkip}{%
+  \l_MT_above_intertext_sep=\belowdisplayskip
+  \l_MT_above_shortintertext_sep=\belowdisplayshortskip
+  \belowdisplayskip=0pt
+  \belowdisplayshortskip=0pt
+}{%
+}
+\ExplSyntaxOff
+
+% Augmented matrix
+\newenvironment{amatrix}[1]{%
+  \left[\begin{array}{@{}*{#1}{c}|c@{}}
+      }{%
+    \end{array}\right]
+}
+
+% Block matrix
+\newenvironment{blmatrix}[1]{%
+  \left[\begin{array}{#1}
+      }{%
+    \end{array}\right]
+}
+
+% Optional parameter for matrix environment to stretch vertically
+\makeatletter
+\renewcommand*\env@matrix[1][\arraystretch]{%
+  \edef\arraystretch{#1}%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{*\c@MaxMatrixCols c}}
+\makeatother
+
+% \delimgrowth=1

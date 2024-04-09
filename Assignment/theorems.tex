@@ -1,3 +1,4 @@
+\usepackage{thmtools}
 \usepackage[many]{tcolorbox}
 
 % Wrap \newtcbtheorem so that arguments are optional: [title=..., label=...]
@@ -24,7 +25,6 @@
     {
         \keys_set:nn { thm/tcb } { ##1 }
         \thm_tcb_begin:nVV {#2inner} \l__thm_tcb_title_tl \l__thm_tcb_label_tl
-        \setlength{\parskip}{\baselineskip/2}
     }
     {
         \end{#2inner}
@@ -33,7 +33,6 @@
     {
         \keys_set:nn { thm/tcb } { ##1 }
         \thm_tcb_begin:nVV {#2inner*} \l__thm_tcb_title_tl \l__thm_tcb_label_tl
-        \setlength{\parskip}{\baselineskip/2}
     }
     {
         \end{#2inner*}
@@ -48,7 +47,6 @@
     {
         \keys_set:nn { thm/tcb } { ##1 }
         \thm_tcb_begin:nVV {#2inner} \l__thm_tcb_title_tl \l__thm_tcb_label_tl
-        \setlength{\parskip}{\baselineskip/2}
     }
     {
         \end{#2inner}
@@ -58,7 +56,6 @@
     {
         \keys_set:nn { thm/tcb } { ##1 }
         \thm_tcb_begin:nVV {#2inner*} \l__thm_tcb_title_tl \l__thm_tcb_label_tl
-        \setlength{\parskip}{\baselineskip/2}
     }
     {
         \end{#2inner*}
@@ -90,7 +87,8 @@
 \definecolor{DarkPurple}{HTML}{783866}
 \definecolor{PastelPink}{HTML}{FF5465}
 \definecolor{DarkBlue}{HTML}{08004c}
-\colorlet{DarkBrown}{black!70!brown!80}
+% \colorlet{DarkBrown}{black!70!brown!80}
+\colorlet{DarkBrown}{black!40!brown!}
 
 % ============================================================================
 % Boxes
@@ -115,12 +113,12 @@
             coltitle=#1!70!black,
             before upper={\tcbtitle\quad}
         },
-    titled/.style={enhanced, pad at break*=2mm, breakable,
-            left=4mm, right=4mm, top=1mm, bottom=1mm,
-            colback=#1!8, boxrule=0.5mm,
-            colframe=#1, arc=.5mm,
-            fonttitle=\sffamily\bfseries, coltitle=#1!8,
-            beforeafter skip balanced=3mm
+    titled/.style={bicolor, pad at break*=2mm, breakable,
+            left=4mm, right=4mm, top=2mm, bottom=2mm,
+            colback=#1!8, colbacklower=#1!2, boxrule=0.5mm,
+            colframe=#1!70!black, arc=.5mm, beforeafter skip balanced=3mm,
+            detach title,
+            fonttitle=\sffamily\bfseries, coltitle=#1!70!black
         },
     boxmath/.style={
             left=4mm, right=4mm, top=1mm, bottom=1mm,
@@ -131,109 +129,28 @@
 }
 
 % ============================================================================
-% Theorems
-% ============================================================================
-
-\mynewtcbtheorem[number within=section]{theorem}
-{Theorem}{sticky=DarkPurple, label type=theorem}{thm}
-\mynewtcbtheorem[number within=section]{proposition}
-{Proposition}{sticky=DarkPurple, label type=proposition}{prop}
-\mynewtcbtheorem[number within=section]{conjecture}
-{Conjecture}{sticky=DarkPurple, label type=conjecture}{conj}
-\mynewtcbtheorem[number within=section]{corollary}
-{Corollary}{sticky=DarkPurple, label type=corollary}{cor}
-\mynewtcbtheorem[number within=section]{lemma}
-{Lemma}{sticky=DarkPurple, label type=lemma}{lem}
-
-% ============================================================================
-% Definition
-% ============================================================================
-
-\mynewtcbtheorem[number within=section]{definition}
-{Definition}{sticky=ForestGreen, label type=definition}{def}
-
-% ============================================================================
-% Example
-% ============================================================================
-
-\mynewtcbtheorem[number within=section]{example}
-{Example}{sticky=NavyBlue, label type=example}{eg}
-
-% ============================================================================
 % Exercise & question
 % ============================================================================
 
-\mynewtcbtheorem[number within=section]{exercise}
-{Exercise}{sticky=PastelPink, label type=exercise}{ex}
-\crefname{exercise}{exercise}{exercises}
-\Crefname{exercise}{Exercise}{Exercises}
+% \mynewtcbtheorem[number within=section]{exercise}
+% {Exercise}{sticky=PastelPink, label type=exercise}{ex}
+% \crefname{exercise}{exercise}{exercises}
+% \Crefname{exercise}{Exercise}{Exercises}
 
 \newtcolorbox[
     auto counter,
-    number freestyle={\noexpand\arabic{\tcbcounter})}]
-{question}{
-    detach title,
+    number freestyle={\noexpand\arabic{\tcbcounter}.}]
+{question}[1][]{
+    titled=gray!70!black,
+    colback=gray!70!black!12, colbacklower=gray!70!black!6,
+    #1,
     title={Question \thetcbcounter},
-    coltitle=black,
-    fonttitle=\bfseries,
     before upper={\tcbtitle\quad},
 }
 
 % ============================================================================
-% Note
-% ============================================================================
-
-\mynewtcbtheorem[no counter]{note}
-{Note}{sticky=Goldenrod, label type=note}{note}
-\mynewtcbtheorem[number within=section]{remark}
-{Remark}{sticky=Goldenrod, label type=remark}{rem}
-\mynewtcbtheorem[number within=section]{recall}
-{Recall}{sticky=Goldenrod, label type=recall}{recall}
-\mynewtcbtheorem[no counter]{property}
-{Property}{sticky=Goldenrod, label type=property}{propty}
-\mynewtcbtheorem[no counter]{warning}
-{Warning}{sticky=BrickRed, label type=warning}{warn}
-
-% ============================================================================
-% Notation
-% ============================================================================
-
-\mynewtcbtheorem[no counter]{notation}
-{Notation}{sticky=Gray, label type=notation}{notation}
-
-% ============================================================================
 % Formula
 % ============================================================================
-
-\newtcolorbox{formulainner}[2]{
-    titled=DarkBlue,
-    title=#1, label=#2,
-    label type=formula
-}
-
-\ExplSyntaxOn
-\NewDocumentEnvironment{formula}{O{}}
-{
-    \keys_set:nn { form/tcb } { #1 }
-    \form_tcb_begin:nVV {formulainner} \l__form_tcb_title_tl \l__form_tcb_label_tl
-}
-{
-    \end{formulainner}
-}
-
-\cs_new_protected:Nn \form_tcb_begin:nnn
-{
-    \begin{#1}{#2}{#3}
-}
-\cs_generate_variant:Nn \form_tcb_begin:nnn { nVV }
-\keys_define:nn { form/tcb }
-{
-    title .tl_set:N = \l__form_tcb_title_tl,
-    label .tl_set:N = \l__form_tcb_label_tl,
-}
-\ExplSyntaxOff
-\crefname{formula}{formula}{formulas}
-\Crefname{formula}{Formula}{Formulas}
 
 \NewDocumentCommand{\boxmath}{O{} m}
 {
@@ -261,50 +178,28 @@
 
 % Default proofcolor
 \colorlet{proofcolor}{DarkPurple}
-\patchtheorem{theorem}{DarkPurple}*
-\patchtheorem{proposition}{DarkPurple}*
-\patchtheorem{conjecture}{DarkPurple}*
-\patchtheorem{corollary}{DarkPurple}*
-\patchtheorem{lemma}{DarkPurple}*
-\patchtheorem{definition}{ForestGreen}*
-\patchtheorem{example}{NavyBlue}*
-\patchtheorem{exercise}{PastelPink}*
-\patchtheorem{remark}{Goldenrod}
-
-\renewcommand{\qed}{\null\hfill\textcolor{proofcolor}{\(\blacksquare\)}}
+\patchtheorem{question}{gray!70!black}
 
 \newenvironment{wraptheorem}{
-    \ifbool{intheorem}{\vspace{-4.5pt}}{\begin{tcolorbox}[
+    \ifbool{intheorem}{}{\begin{tcolorbox}[
                 sticky=proofcolor,
                 colback=proofcolor!2, before upper={}
             ]}}
             {\ifbool{intheorem}{}{\end{tcolorbox}}}
 
 \makeatletter
-\renewenvironment{proof}[1][Proof]{
+\newenvironment{answer}[1][Answer]{
     \begin{wraptheorem}\par
-        \pushQED{\qed}%
         \normalfont \topsep6\p@\@plus6\p@\relax
         \trivlist
         \item{\color{proofcolor!70!black}\sffamily\bfseries
-                    #1}\ignorespaces\hspace{0.8em}
-        \setlength{\parskip}{\baselineskip/2}
+                    #1}\ignorespaces\hspace{1em}
         }{%
-        \popQED\endtrivlist\@endpefalse\end{wraptheorem}
+        \endtrivlist\@endpefalse\end{wraptheorem}
 }
 \makeatother
 
-\newenvironment{answer}[1][Answer]{
-    \renewcommand{\qed}{\null\hfill\textcolor{proofcolor}{\(\circledast\)}}
-    \proof[#1]}{\endproof}
-
-\BeforeBeginEnvironment{proof}{\ifbool{intheorem}{\tcblower}{}}
 \BeforeBeginEnvironment{answer}{\ifbool{intheorem}{\tcblower}{}}
-
-\crefformat{proof}{#2proof#3}
-\crefname{answer}{answer}{answers}
-\Crefname{answer}{Answer}{Answers}
-
 
 % ============================================================================
 % Algorithm
@@ -312,23 +207,9 @@
 
 \NewEnvironmentCopy{oldalgorithm}{algorithm}
 
-\myrenewtcbtheorem[number within=section]{algorithm}{Algorithm}{
+\myrenewtcbtheorem[no counter]{algorithm}{Algorithm}{
     titled=DarkBrown,
-    % description delimiters parenthesis,
+    description delimiters parenthesis,
     separator sign none, terminator sign none,
     description font=\mdseries,
     label type=algorithm, before upper={\oldalgorithm[H]}, after upper={\endoldalgorithm}}{alg}
-
-
-% ============================================================================
-% Hide theorem environments
-% ============================================================================
-\usepackage{environ}
-\NewEnviron{killcontents}{}
-\newbool{hide_exercises}
-\AfterEndPreamble{\ifbool{hide_exercises}{
-        \RenewDocumentEnvironment{exercise}{o}{\killcontents}{\endkillcontents}
-    }{}}
-
-
-
